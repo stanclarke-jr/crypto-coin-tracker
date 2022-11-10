@@ -1,5 +1,15 @@
 # Cryptocurrency Coin Tracker
 
+<br>
+<br>
+<div align='center' width='100%'>
+  <img src='demo-files/coin-tracker-demo.gif' alt='Coin Tracker demo' style='box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05); border-radius: 0.5rem'>
+</div>
+
+<br>
+<br>
+
 <!-- <details>
   <summary>Table of Contents</summary>
 
