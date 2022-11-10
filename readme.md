@@ -1,11 +1,11 @@
 # Cryptocurrency Coin Tracker
 
-<details>
+<!-- <details>
   <summary>Table of Contents</summary>
 
   - [Live Demo](#live-demo)
   - [Built With](#built-with)
-</details>
+</details> -->
 
 ## Live Demo
 
