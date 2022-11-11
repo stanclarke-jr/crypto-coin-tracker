@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
-import { Link as RouterLink, Navigate, useNavigate } from 'react-router-dom';
-import { CoinList } from '../configs/api';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CoinsContext } from '../contexts/CoinsContext';
 import {
   HStack,
@@ -14,40 +12,25 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   Text,
   Input,
   Image,
-  Link,
   Progress,
-  Flex,
 } from '@chakra-ui/react';
 import { currencyFormatter, options, positiveNum } from '../utils';
 import Pagination from './Pagination';
 
 const CoinsTable = () => {
-  const [coins, setCoins] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
+  const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
 
   const itemsPerPage = 10;
   const endOffset = offset + itemsPerPage;
 
-  const { currency } = useContext(CoinsContext);
+  const { coins, loading } = useContext(CoinsContext);
 
   const navigate = useNavigate();
-
-  const fetchCoins = async () => {
-    setLoading(true);
-    const { data } = await axios.get(CoinList(currency));
-    setCoins(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchCoins();
-  }, [currency]);
 
   const handleSearch = e => {
     return coins.filter(
@@ -56,8 +39,6 @@ const CoinsTable = () => {
         coin.symbol.toLowerCase().includes(search.toLowerCase())
     );
   };
-
-  console.log(coins);
 
   return (
     <>
@@ -80,7 +61,7 @@ const CoinsTable = () => {
               _placeholder={{ opcity: 0.8, color: 'gray.500' }}
               _focusVisible={{
                 borderColor: 'whiteAlpha.500',
-                boxShadow: `0 0 0 0.25px RGBA(255, 255, 255, 0.36)`,
+                boxShadow: `0 0 0 0.25px rgba(255, 255, 255, 0.36)`,
               }}
               size="lg"
               mb={10}
@@ -91,6 +72,7 @@ const CoinsTable = () => {
                 <Tr>
                   {['Coin', 'Price', '24h Change', 'Market Cap'].map(header => (
                     <Th
+                      key={header.toLowerCase()}
                       scope="col"
                       color="#000"
                       textAlign={header === 'Coin' ? 'left' : 'right'}
@@ -173,6 +155,7 @@ const CoinsTable = () => {
         offset={offset}
         setOffset={setOffset}
         endOffset={endOffset}
+        setPage={setPage}
       />
     </>
   );

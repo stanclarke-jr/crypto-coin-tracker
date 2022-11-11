@@ -6,8 +6,6 @@ import HomePage from '../pages/HomePage';
 import '../styles/App.css';
 import theme from '../configs/theme';
 
-console.log(window.innerWidth);
-
 function App() {
   return (
     <ChakraProvider theme={theme}>

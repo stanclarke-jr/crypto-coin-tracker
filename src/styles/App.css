@@ -6,8 +6,34 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-
-/* a {
-  text-decoration: none;
-  color: gold;
-} */
+/* ---- PAGINATION STYLES - START */
+li {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+li:hover:not(.selected, .previous, .next) {
+  background-color: rgba(255, 255, 255, 0.16);
+}
+li.previous,
+li.next {
+  padding: 0 0.5rem;
+}
+li.selected {
+  background-color: #ecc94b;
+  color: #1a202c;
+}
+li.selected,
+li.selected a,
+li.disabled a {
+  cursor: auto;
+}
+li.disabled,
+li.disabled a {
+  color: #4a5568;
+}
+/* PAGINATION STYLES - END ----- */
