@@ -6,6 +6,14 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
+p > a {
+  color: #ecc94b;
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; /* Chakra UI's yellow.400*/
+}
+p > a:hover,
+p > a:visited {
+  color: #d69e2e;
+}
 /* ---- PAGINATION STYLES - START */
 li {
   display: inline-flex;
@@ -24,7 +32,7 @@ li.next {
   padding: 0 0.5rem;
 }
 li.selected {
-  background-color: #ecc94b;
+  background-color: #ecc94b;  /* Chakra UI's yellow.400 */
   color: #1a202c;
 }
 li.selected,

@@ -20,9 +20,9 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <Box as="nav">
+    <Box as="header" h={20} minH={16} boxShadow="xl" px={[null, 4, null, 16]}>
       <Container maxW="100%" py={{ base: '4', lg: '5' }}>
-        <Flex justify="space-between">
+        <Flex justify="space-between" alignItems="center">
           <Text
             onClick={() => navigate('/')}
             fontFamily="Montserrat"
