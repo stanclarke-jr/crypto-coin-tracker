@@ -9,6 +9,7 @@ import {
   Box,
   Flex,
   VStack,
+  Container,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -16,6 +17,7 @@ import parse from 'html-react-parser';
 import { SingleCoin } from '../configs/api';
 import { CoinsContext } from '../contexts/CoinsContext';
 import { currencyFormatter, options } from '../utils';
+import CoinChart from '../components/CoinChart';
 
 const CoinsPage = () => {
   const [coin, setCoin] = useState([]);
@@ -46,22 +48,30 @@ const CoinsPage = () => {
       <Grid
         h="calc(100vh - 5rem)"
         templateRows="repeat(1, 1fr)"
-        templateColumns={[
-          null,
-          'repeat(1, 1fr)',
-          null,
-          'repeat(1, 30% 1fr 1fr)',
-        ]}
-        mt={8}
+        templateColumns={[null, 'repeat(1, 1fr)', null, 'repeat(1, 30% 1fr)']}
+        my={8}
+        gap={16}
         fontFamily="Montserrat"
       >
-        <VStack align={[null, 'center', null, 'start']} p={7} pt={2}>
-          <Box alignSelf="center">
-            <Image src={coin?.image?.large} alt={coin?.name} boxSize={56} />
-            <Text as="h1" fontSize="5xl" fontWeight="bold">
-              {coin?.name}
-            </Text>
-          </Box>
+        <VStack
+          align={['center', null, null, 'start']}
+          borderRight="1px"
+          borderColor="whiteAlpha.400"
+          p={7}
+          pt={2}
+        >
+          <Image
+            src={coin?.image?.large}
+            alt={coin?.name}
+            boxSize={[null, 44, null, 56]}
+          />
+          <Text
+            as="h1"
+            fontSize={['3xl', '3xl', null, '5xl']}
+            fontWeight="bold"
+          >
+            {coin?.name}
+          </Text>
           {shortCoinDescription === undefined ? (
             <CircularProgress
               isIndeterminate
@@ -71,16 +81,22 @@ const CoinsPage = () => {
             />
           ) : (
             <>
-              <Text align={[null, 'center', null, 'start']} pb={10}>
+              <Container
+                maxW={['sm', 'md', 'lg', 'xl', '2xl']}
+                fontSize={[null, 'sm', null, 'md']}
+                align={[null, 'center', null, 'start']}
+                px={0}
+                pb={10}
+              >
                 {parse(`${shortCoinDescription}.`)}
-              </Text>
-              <Text fontSize="3xl" fontWeight="bold">
+              </Container>
+              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
                 Rank:{' '}
                 <Text as="span" fontWeight="medium" ml={1}>
                   {coin?.market_cap_rank}
                 </Text>
               </Text>
-              <Text fontSize="3xl" fontWeight="bold">
+              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
                 Current Price:{' '}
                 <Text as="span" fontWeight="medium" ml={1}>
                   {currencyFormatter(
@@ -89,7 +105,7 @@ const CoinsPage = () => {
                   )}
                 </Text>
               </Text>
-              <Text fontSize="3xl" fontWeight="bold">
+              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
                 Market Cap:{' '}
                 <Text as="span" fontWeight="medium" ml={1}>
                   {currencyFormatter(
@@ -102,18 +118,7 @@ const CoinsPage = () => {
             </>
           )}
         </VStack>
-        {!loading ? (
-          <VStack colSpan={2}>Chart goes here.</VStack>
-        ) : (
-          <Flex colSpan={2} align="center" justify="center">
-            <CircularProgress
-              isIndeterminate
-              color="yellow.400"
-              size="200px"
-              thickness="2px"
-            />
-          </Flex>
-        )}
+        <CoinChart coinId={coinId} currency={currency} />
       </Grid>
     </>
   );

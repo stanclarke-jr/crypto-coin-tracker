@@ -22,6 +22,7 @@ import Pagination from './Pagination';
 
 const CoinsTable = () => {
   const [search, setSearch] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
 
