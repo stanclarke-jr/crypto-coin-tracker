@@ -5,6 +5,9 @@ import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { HistoricalChart } from '../configs/api';
 import { Button, CircularProgress, Flex, HStack } from '@chakra-ui/react';
+import { chartDays } from '../configs/chart-days';
+import { chartButtonStyles } from '../styles/chartButtonStyles';
+import ChartButtons from './ChartButtons';
 
 Chart.register(...registerables);
 
@@ -31,23 +34,7 @@ const CoinChart = ({ coinId, currency }) => {
   console.log('Historical Data: ', historicalData);
   console.log('Currency: ', currency);
   console.log('Historical prices: ', historicalPrices);
-
-  const buttonStyles = {
-    w: '23%',
-    border: '1px',
-    color: 'whiteAlpha.800',
-    py: '2',
-    px: '6',
-    borderColor: 'yellow.400',
-    fontWeight: 'normal',
-    bg: 'transparent',
-    _hover: { background: 'yellow.400', color: '#000' },
-    _active: {
-      background: 'yellow.400',
-      color: '#000',
-      fontWeight: 'semibold',
-    },
-  };
+  console.log('Selected chart days: ', days);
 
   return (
     <>
@@ -61,7 +48,7 @@ const CoinChart = ({ coinId, currency }) => {
           />
         </Flex>
       ) : (
-        <Flex justify="center" mt={8}>
+        <Flex justify="center" mt={6}>
           <Flex direction="column" w={['75%', '85%', null, '100%']}>
             <Line
               data={{
@@ -78,16 +65,36 @@ const CoinChart = ({ coinId, currency }) => {
                     data: historicalPrices.map(
                       historicalPrice => historicalPrice[1]
                     ),
+                    label: `Price ( past ${
+                      days === 1 ? 'day' : `${days} days`
+                    } ) in ${currency}`,
+                    borderColor: '#ecc94b',
+                    backgroundColor: '#ecc94b',
                   },
                 ],
               }}
+              options={{
+                elements: {
+                  point: {
+                    radius: 1,
+                  },
+                },
+              }}
             />
             {/* <ButtonGroup variant="outline"> */}
-            <HStack mt={4} mb={12}>
-              <Button {...buttonStyles}>24 Hours</Button>
-              <Button {...buttonStyles}>30 Days</Button>
-              <Button {...buttonStyles}>3 Months</Button>
-              <Button {...buttonStyles}>1 Year</Button>
+            <HStack justify="space-around" mt={4} mb={12}>
+              {chartDays.map(days => (
+                <ChartButtons
+                  // {...chartButtonStyles}
+                  key={days.value}
+                  selected={days.value === days}
+                  onClick={() => {
+                    setDays(days.value);
+                  }}
+                >
+                  {days.label}
+                </ChartButtons>
+              ))}
             </HStack>
           </Flex>
         </Flex>
