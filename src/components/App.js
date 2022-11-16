@@ -5,11 +5,13 @@ import CoinsPage from '../pages/CoinsPage';
 import HomePage from '../pages/HomePage';
 import '../styles/App.css';
 import theme from '../configs/theme';
+import ScrollToTop from '../utils/ScrollToTop';
 
 function App() {
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
+        <ScrollToTop />
         <Box>
           <Header />
           <Routes>

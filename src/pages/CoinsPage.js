@@ -6,10 +6,9 @@ import {
   Image,
   Text,
   Progress,
-  Box,
-  Flex,
   VStack,
   Container,
+  SkeletonCircle,
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -24,12 +23,9 @@ const CoinsPage = () => {
   const [loading, setLoading] = useState(false);
   const { currency } = useContext(CoinsContext);
 
-  const shortCoinDescription = coin?.description?.en.split('. ')[0];
-  console.log(shortCoinDescription);
+  const shortCoinDescription = coin?.description?.en.split('.')[0];
 
   let { id: coinId } = useParams();
-
-  console.log('Coin data: ', coin);
 
   const fetchCoin = async () => {
     setLoading(true);
@@ -50,6 +46,7 @@ const CoinsPage = () => {
         templateRows="repeat(1, 1fr)"
         templateColumns={[null, 'repeat(1, 1fr)', null, 'repeat(1, 30% 1fr)']}
         my={8}
+        mr={[null, null, null, 16]}
         gap={16}
         fontFamily="Montserrat"
       >
@@ -60,11 +57,14 @@ const CoinsPage = () => {
           p={7}
           pt={2}
         >
-          <Image
-            src={coin?.image?.large}
-            alt={coin?.name}
-            boxSize={[null, 44, null, 56]}
-          />
+          <SkeletonCircle isLoaded={!loading} size={[null, 44, null, 56]}>
+            <Image
+              src={coin?.image?.large}
+              alt={coin?.name}
+              boxSize={[null, 44, null, 56]}
+              border="none"
+            />
+          </SkeletonCircle>
           <Text
             as="h1"
             fontSize={['3xl', '3xl', null, '5xl']}
@@ -88,7 +88,9 @@ const CoinsPage = () => {
                 px={0}
                 pb={10}
               >
-                {parse(`${shortCoinDescription}.`)}
+                <Text textAlign={[null, 'center', null, 'left']}>
+                  {parse(`${shortCoinDescription}.`)}
+                </Text>
               </Container>
               <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
                 Rank:{' '}
