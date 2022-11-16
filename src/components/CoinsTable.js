@@ -16,6 +16,7 @@ import {
   Input,
   Image,
   Progress,
+  Container,
 } from '@chakra-ui/react';
 import { currencyFormatter, options, positiveNum } from '../utils';
 import Pagination from './Pagination';
@@ -43,31 +44,34 @@ const CoinsTable = () => {
 
   return (
     <>
+      <Container maxW="100%">
+        <Text
+          as="h2"
+          fontSize={['2xl', '4xl']}
+          fontFamily="Montserrat"
+          align="center"
+          my={22}
+        >
+          Coin Prices by Market Cap
+        </Text>
+        <Input
+          placeholder="Search for a coin..."
+          _placeholder={{ opcity: 0.8, color: 'gray.500' }}
+          _focusVisible={{
+            borderColor: 'whiteAlpha.500',
+            boxShadow: `0 0 0 0.25px rgba(255, 255, 255, 0.36)`,
+          }}
+          size="lg"
+          mb={2}
+          onChange={e => setSearch(e.target.value)}
+        />
+      </Container>
+
       <TableContainer m="1.5rem">
         {loading ? (
           <Progress isIndeterminate bg="yellow.400" size="xs" />
         ) : (
           <>
-            <Text
-              as="h2"
-              fontSize="4xl"
-              fontFamily="Montserrat"
-              align="center"
-              my={22}
-            >
-              Coin Prices by Market Cap
-            </Text>
-            <Input
-              placeholder="Search for a coin..."
-              _placeholder={{ opcity: 0.8, color: 'gray.500' }}
-              _focusVisible={{
-                borderColor: 'whiteAlpha.500',
-                boxShadow: `0 0 0 0.25px rgba(255, 255, 255, 0.36)`,
-              }}
-              size="lg"
-              mb={10}
-              onChange={e => setSearch(e.target.value)}
-            />
             <Table size={['sm', null, 'md']} fontWeight="medium">
               <Thead bg="yellow.400">
                 <Tr>
