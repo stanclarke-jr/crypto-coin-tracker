@@ -15,6 +15,7 @@
 ## Live Demo
 
 [Coin Tracker](https://co1n-tracker.netlify.app/)
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/24a8cbac-145f-4ec7-a1ae-98167813aac7/deploy-status)](https://app.netlify.com/sites/co1n-tracker/deploys)
 
 ## Built with
