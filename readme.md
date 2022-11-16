@@ -25,6 +25,7 @@
 - [Chart.js](https://www.chartjs.org/)
 - [react-paginate](https://www.npmjs.com/package/react-paginate/)
 - [Axios](https://axios-http.com/docs/intro)
+- [CoinGecko API](https://www.coingecko.com/en/api)
 
 ## Contact
 
