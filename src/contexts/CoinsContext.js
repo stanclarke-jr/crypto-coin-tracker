@@ -6,10 +6,10 @@ import { CoinList } from '../configs/api.js';
 export const CoinsContext = createContext();
 
 export const CoinsProvider = ({ children }) => {
-  const [currency, setCurrency] = useState('CAD');
-  const [symbol, setSymbol] = useState('$');
-  const [loading, setLoading] = useState(false);
   const [coins, setCoins] = useState([]);
+  const [currency, setCurrency] = useState('CAD');
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   const fetchCoins = async () => {
     setLoading(true);
@@ -23,9 +23,7 @@ export const CoinsProvider = ({ children }) => {
   }, [currency]);
 
   return (
-    <CoinsContext.Provider
-      value={{ coins, loading, currency, setCurrency, symbol, setSymbol }}
-    >
+    <CoinsContext.Provider value={{ coins, loading, currency, setCurrency }}>
       {children}
     </CoinsContext.Provider>
   );
