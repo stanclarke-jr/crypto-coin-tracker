@@ -37,6 +37,9 @@ const Header = () => {
           <HStack>
             <Select
               w={100}
+              color="rgb(255 255 255/0.92)"
+              borderColor="rgb(255 255 255/0.16)"
+              _hover={{ borderColor: 'rgb(255 255 255/0.24)' }}
               value={currency}
               onChange={e => setCurrency(e.target.value)}
             >

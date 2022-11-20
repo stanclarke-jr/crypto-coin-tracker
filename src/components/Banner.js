@@ -9,6 +9,7 @@ const Banner = () => {
         <hgroup>
           <Heading
             as="h1"
+            color="rgb(255 255 255/0.92)"
             fontSize={['5xl', '7xl']}
             fontFamily="Montserrat"
             fontWeight="bold"

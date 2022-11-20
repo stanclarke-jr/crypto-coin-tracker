@@ -72,6 +72,7 @@ const CoinsPage = () => {
           </SkeletonCircle>
           <Text
             as="h1"
+            color="rgb(255 255 255/0.92)"
             fontSize={['3xl', '3xl', null, '5xl']}
             fontWeight="bold"
           >
@@ -93,17 +94,33 @@ const CoinsPage = () => {
                 px={0}
                 pb={10}
               >
-                <Text textAlign={[null, 'center', null, 'left']}>
+                <Text
+                  color="rgb(255 255 255/0.92)"
+                  textAlign={[null, 'center', null, 'left']}
+                >
                   {parse(`${shortCoinDescription}.`)}
                 </Text>
               </Container>
-              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
+              <Text
+                color="rgb(255 255 255/0.92)"
+                fontSize={[null, 'xl', null, '3xl']}
+                fontWeight="bold"
+              >
                 Rank:{' '}
-                <Text as="span" fontWeight="medium" ml={1}>
+                <Text
+                  as="span"
+                  color="rgb(255 255 255/0.92)"
+                  fontWeight="medium"
+                  ml={1}
+                >
                   {coin?.market_cap_rank}
                 </Text>
               </Text>
-              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
+              <Text
+                color="rgb(255 255 255/0.92)"
+                fontSize={[null, 'xl', null, '3xl']}
+                fontWeight="bold"
+              >
                 Current Price:{' '}
                 <Text as="span" fontWeight="medium" ml={1}>
                   {currencyFormatter(
@@ -112,9 +129,18 @@ const CoinsPage = () => {
                   )}
                 </Text>
               </Text>
-              <Text fontSize={[null, 'xl', null, '3xl']} fontWeight="bold">
+              <Text
+                color="rgb(255 255 255/0.92)"
+                fontSize={[null, 'xl', null, '3xl']}
+                fontWeight="bold"
+              >
                 Market Cap:{' '}
-                <Text as="span" fontWeight="medium" ml={1}>
+                <Text
+                  as="span"
+                  color="rgb(255 255 255/0.92)"
+                  fontWeight="medium"
+                  ml={1}
+                >
                   {currencyFormatter(
                     coin?.market_data?.market_cap[currency?.toLowerCase()],
                     options
