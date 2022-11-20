@@ -38,10 +38,10 @@ const AuthModal = () => {
 
               <TabPanels mt={2}>
                 <TabPanel>
-                  <Login />
+                  <Login onClose={onClose} />
                 </TabPanel>
                 <TabPanel>
-                  <SignUp />
+                  <SignUp onClose={onClose} />
                 </TabPanel>
               </TabPanels>
             </Tabs>

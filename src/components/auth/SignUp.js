@@ -10,34 +10,61 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import theme from '../../configs/theme';
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { toastOptions } from '../../configs/toast';
+import { auth } from '../../firebase';
 
-const SignUp = () => {
+const SignUp = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const toast = useToast();
 
+  // TODO: Figure out how to switch tab panels on success sign up
+  // const loginTab = document.querySelector('button[data-index="0"]');
+  // const signupTab = document.querySelector('button[data-index="1"]');
+  // const loginPanel = document.querySelector('[aria-labelledby*="tab-0"]');
+  // const signupPanel = document.querySelector('[aria-labelledby*="tab-1"]');
+
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
       toastOptions.title = 'An error occurred.';
       toastOptions.description = 'Passwords do not match';
       toastOptions.status = 'error';
-
       toast(toastOptions);
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      return;
     }
     try {
-      const auth = getAuth();
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
       const user = userCredentials.user;
-      console.log('%cFirebase user: ', 'color: orange', user);
-    } catch (error) {}
+      if (password.length && password === confirmPassword) {
+        toastOptions.title = 'Sign up successful!';
+        toastOptions.description = `You're email is ${user.email}. Go ahead and log in!`;
+        toastOptions.status = 'success';
+        toast(toastOptions);
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        // onClose(); // Closes toast regardless of duration value
+      }
+    } catch (error) {
+      toastOptions.title = 'An error occured.';
+      toastOptions.description = error.message;
+      toastOptions.status = 'error';
+      toast(toastOptions);
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      return;
+    }
   };
 
   return (
