@@ -135,7 +135,11 @@ const CoinsTable = () => {
                             </VStack>
                           </HStack>
                         </Th>
-                        <Td borderColor="#2d3748" textAlign="right">
+                        <Td
+                          color="rgb(255 255 255/0.92)"
+                          borderColor="#2d3748"
+                          textAlign="right"
+                        >
                           {currencyFormatter(coin.current_price, options)}
                         </Td>
                         <Td
@@ -150,7 +154,11 @@ const CoinsTable = () => {
                           {positiveNum(coin.price_change_percentage_24h) && '+'}
                           {`${coin.price_change_percentage_24h.toFixed(2)}%`}
                         </Td>
-                        <Td borderColor="#2d3748" textAlign="right">
+                        <Td
+                          color="rgb(255 255 255/0.92)"
+                          borderColor="#2d3748"
+                          textAlign="right"
+                        >
                           {currencyFormatter(coin.market_cap, options).slice(
                             0,
                             -3
