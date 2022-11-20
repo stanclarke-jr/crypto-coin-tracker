@@ -35,7 +35,6 @@ const config = {
               position: 'absolute',
               color: '#718096',
               backgroundColor: '#2d3748',
-              pointerEvents: 'none',
               mx: 3,
               px: 1,
               my: 3,
