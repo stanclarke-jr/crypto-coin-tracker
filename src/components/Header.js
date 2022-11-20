@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { CoinsContext } from '../contexts/CoinsContext';
+import AuthModal from './auth/AuthModal';
 
 const Header = () => {
   // const isDesktop = useBreakpointValue({ base: false, lg: true });
@@ -42,6 +43,7 @@ const Header = () => {
               <option value="USD">USD</option>
               <option value="CAD">CAD</option>
             </Select>
+            <AuthModal />
             {/* <ColorModeSwitcher /> */}
           </HStack>
         </Flex>

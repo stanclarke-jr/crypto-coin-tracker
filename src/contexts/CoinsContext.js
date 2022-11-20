@@ -23,7 +23,17 @@ export const CoinsProvider = ({ children }) => {
   }, [currency]);
 
   return (
-    <CoinsContext.Provider value={{ coins, loading, currency, setCurrency }}>
+    <CoinsContext.Provider
+      value={{
+        alert,
+        coins,
+        currency,
+        setCurrency,
+        loading,
+        setUser,
+        user,
+      }}
+    >
       {children}
     </CoinsContext.Provider>
   );

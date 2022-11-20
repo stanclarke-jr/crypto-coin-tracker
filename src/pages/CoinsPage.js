@@ -15,15 +15,20 @@ import axios from 'axios';
 import parse from 'html-react-parser';
 import { SingleCoin } from '../configs/api';
 import { CoinsContext } from '../contexts/CoinsContext';
-import { currencyFormatter, options } from '../utils';
+import { currencyFormatter, options } from '../utils/utils';
 import CoinChart from '../components/CoinChart';
 
 const CoinsPage = () => {
   const [coin, setCoin] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const { currency } = useContext(CoinsContext);
 
-  const shortCoinDescription = coin?.description?.en.split('.')[0];
+  const shortCoinDescription = coin?.description?.en.includes('href=')
+    ? coin?.description?.en.split('. ')[0]
+    : !coin?.description?.en.length
+    ? 'No coin description available'
+    : coin?.description?.en.split('.')[0];
 
   let { id: coinId } = useParams();
 

@@ -18,7 +18,7 @@ import {
   Progress,
   Container,
 } from '@chakra-ui/react';
-import { currencyFormatter, options, positiveNum } from '../utils';
+import { currencyFormatter, options, positiveNum } from '../utils/utils';
 import Pagination from './Pagination';
 
 const CoinsTable = () => {
@@ -98,7 +98,7 @@ const CoinsTable = () => {
                         fontFamily="Montserrat"
                         cursor="pointer"
                         verticalAlign="middle"
-                        _hover={{ bg: 'gray.900' }}
+                        _hover={{ bg: 'gray.800' }}
                         onClick={() => navigate(`/coins/${coin.id}`)}
                       >
                         <Th scope="row" pl={4} fontWeight="medium">

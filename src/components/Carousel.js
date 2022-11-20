@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Flex, Text, Image, VStack, HStack, Container } from '@chakra-ui/react';
 import { TrendingCoins } from '../configs/api';
 import { CoinsContext } from '../contexts/CoinsContext';
-import { currencyFormatter, options, positiveNum } from '../utils';
+import { currencyFormatter, options, positiveNum } from '../utils/utils';
 import { responsive } from '../configs/alice-carousel';
 
 import AliceCarousel from 'react-alice-carousel';
@@ -16,7 +16,6 @@ const Carousel = () => {
 
   const fetchTrendingCoins = async () => {
     const { data } = await axios.get(TrendingCoins(currency));
-    console.log(data);
     setTrendingCoins(data);
   };
 
