@@ -25,7 +25,6 @@ export const CoinsProvider = ({ children }) => {
   return (
     <CoinsContext.Provider
       value={{
-        alert,
         coins,
         currency,
         setCurrency,
