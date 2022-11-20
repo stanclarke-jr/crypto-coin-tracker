@@ -1,10 +1,10 @@
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: 'AIzaSyBs9mSt2qZpZ8ACGv-E0xHhGnvkIRCwgZY',
+  authDomain: 'coin-tracker-ffce2.firebaseapp.com',
+  projectId: 'coin-tracker-ffce2',
+  storageBucket: 'coin-tracker-ffce2.appspot.com',
+  messagingSenderId: '878849709484',
+  appId: '1:878849709484:web:201720d040e952b0019609',
 };
 
 export default firebaseConfig;
