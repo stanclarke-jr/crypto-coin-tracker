@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   ChakraProvider,
@@ -8,8 +9,9 @@ import {
   Stack,
   useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import theme from '../../configs/theme';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { toastOptions } from '../../configs/toast';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -18,21 +20,24 @@ const SignUp = () => {
 
   const toast = useToast();
 
-  const handleSubmit = () => {
-    console.log('onClick triggered');
-
+  const handleSubmit = async () => {
     if (password !== confirmPassword) {
-      toast({
-        title: 'An error occured.',
-        description: 'Passwords do not match.',
-        status: 'error',
-        duration: 7000,
-        isClosable: true,
-        containerStyle: {
-          marginBottom: 20,
-        },
-      });
+      toastOptions.title = 'An error occurred.';
+      toastOptions.description = 'Passwords do not match';
+      toastOptions.status = 'error';
+
+      toast(toastOptions);
     }
+    try {
+      const auth = getAuth();
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredentials.user;
+      console.log('%cFirebase user: ', 'color: orange', user);
+    } catch (error) {}
   };
 
   return (
