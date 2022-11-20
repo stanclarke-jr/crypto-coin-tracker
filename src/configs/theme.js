@@ -33,7 +33,7 @@ const config = {
               left: 0,
               zIndex: 2,
               position: 'absolute',
-              color: '#718096',
+              color: 'rgb(255 255 255/0.64)',
               backgroundColor: '#2d3748',
               mx: 3,
               px: 1,
