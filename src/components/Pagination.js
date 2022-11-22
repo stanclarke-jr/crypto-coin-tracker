@@ -11,17 +11,17 @@ const Pagination = ({
   endOffset,
   setPage,
 }) => {
-  console.log(`Loading items from ${offset} to ${endOffset}`);
+  // console.log(`Loading items from ${offset} to ${endOffset}`);
   const pageCount = Math.ceil(coins.length / itemsPerPage);
 
   const handlePageClick = e => {
     const newOffset = (e.selected * itemsPerPage) % coins.length;
     setPage(e.selected + 1);
     window.scrollTo({ top: 495, left: 0, behavior: 'smooth' });
-    console.log(e.selected);
-    console.log(
-      `User requested page number ${e.selected}, which is offset ${newOffset}`
-    );
+    // console.log(e.selected);
+    // console.log(
+    //   `User requested page number ${e.selected}, which is offset ${newOffset}`
+    // );
     setOffset(newOffset);
   };
 
