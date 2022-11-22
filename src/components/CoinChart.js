@@ -42,7 +42,7 @@ const CoinChart = ({ coinId, currency }) => {
         </Flex>
       ) : (
         <Flex justify="center">
-          <Flex direction="column" w={['75%', '85%', null, '100%']} mt={12}>
+          <Flex direction="column" w={['85%', '90%', null, '100%']} mt={12}>
             {/* TODO: figure out responsiveness on window resize*/}
             <Box position="relative">
               <Line
