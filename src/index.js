@@ -11,8 +11,6 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
-console.log(theme);
-
 root.render(
   <StrictMode>
     <ChakraProvider theme={theme}>
