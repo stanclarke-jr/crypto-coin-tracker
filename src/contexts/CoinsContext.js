@@ -2,6 +2,8 @@
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CoinList } from '../configs/api.js';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../firebase';
 
 export const CoinsContext = createContext();
 
@@ -21,6 +23,12 @@ export const CoinsProvider = ({ children }) => {
   useEffect(() => {
     fetchCoins();
   }, [currency]);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      user ? setUser(user) : setUser(null);
+    });
+  }, []);
 
   return (
     <CoinsContext.Provider

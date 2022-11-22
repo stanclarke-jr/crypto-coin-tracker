@@ -12,11 +12,12 @@ import { useNavigate } from 'react-router-dom';
 // import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { CoinsContext } from '../contexts/CoinsContext';
 import AuthModal from './auth/AuthModal';
+import UserProfileDrawer from './UserProfileDrawer';
 
 const Header = () => {
   // const isDesktop = useBreakpointValue({ base: false, lg: true });
 
-  const { currency, setCurrency } = useContext(CoinsContext);
+  const { currency, setCurrency, user } = useContext(CoinsContext);
 
   const navigate = useNavigate();
 
@@ -46,7 +47,7 @@ const Header = () => {
               <option value="USD">USD</option>
               <option value="CAD">CAD</option>
             </Select>
-            <AuthModal />
+            {user ? <UserProfileDrawer /> : <AuthModal />}
             {/* <ColorModeSwitcher /> */}
           </HStack>
         </Flex>
