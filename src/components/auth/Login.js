@@ -5,15 +5,55 @@ import {
   FormLabel,
   Input,
   Stack,
+  useToast,
 } from '@chakra-ui/react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
+import { toastOptions } from '../../configs/toast';
+import { auth } from '../../firebase';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = () => {
-    console.log('onClick triggered');
+  const toast = useToast();
+
+  const handleSubmit = async () => {
+    if (!email || !password) {
+      toastOptions.title = 'An error occurred.';
+      toastOptions.description = 'Please complete all fields.';
+      toastOptions.status = 'error';
+      toast(toastOptions);
+      setEmail('');
+      setPassword('');
+      return;
+    }
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredentials.user;
+      toastOptions.title = `Log in successful with email: ${user.email}!`;
+      toastOptions.description = `Welcome to Coin Tracker${
+        user.displayName !== null ? ` ${user.displayName}.` : '.'
+      } Track your coins!`;
+      toastOptions.status = 'success';
+      toast(toastOptions);
+      setEmail('');
+      setPassword('');
+      return;
+      // onClose(); // Closes toast regardless of duration value
+    } catch (error) {
+      toastOptions.title = 'An error occured.';
+      toastOptions.description = error.message;
+      toastOptions.status = 'error';
+      toast(toastOptions);
+      setEmail('');
+      setPassword('');
+      return;
+    }
   };
 
   return (
