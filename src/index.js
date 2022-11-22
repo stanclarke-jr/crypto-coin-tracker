@@ -1,8 +1,8 @@
-import { ColorModeScript } from '@chakra-ui/react';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './components/App';
-import theme from './configs/theme';
+import { theme } from './configs/theme';
 import { CoinsProvider } from './contexts/CoinsContext';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
@@ -11,12 +11,16 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container);
 
+console.log(theme);
+
 root.render(
   <StrictMode>
-    <CoinsProvider>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <App />
-    </CoinsProvider>
+    <ChakraProvider theme={theme}>
+      <CoinsProvider>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        <App />
+      </CoinsProvider>
+    </ChakraProvider>
   </StrictMode>
 );
 
