@@ -47,7 +47,6 @@ const CoinsTable = () => {
       <Container maxW="100%">
         <Text
           as="h2"
-          color="rgb(255 255 255/0.92)"
           fontSize={['2xl', '4xl']}
           fontFamily="Montserrat"
           align="center"
@@ -56,7 +55,6 @@ const CoinsTable = () => {
           Coin Prices by Market Cap
         </Text>
         <Input
-          borderColor="rgb(255 255 255/0.16)"
           placeholder="Search for a coin..."
           _placeholder={{ opcity: 0.8, color: 'gray.500' }}
           _hover={{ borderColor: 'rgb(255 255 255/0.24)' }}
@@ -105,12 +103,7 @@ const CoinsTable = () => {
                         _hover={{ bg: 'gray.800' }}
                         onClick={() => navigate(`/coins/${coin.id}`)}
                       >
-                        <Th
-                          scope="row"
-                          pl={4}
-                          borderColor="#2d3748"
-                          fontWeight="medium"
-                        >
+                        <Th scope="row" pl={4} fontWeight="medium">
                           <HStack gap={2}>
                             <Image
                               src={coin.image}
@@ -135,11 +128,7 @@ const CoinsTable = () => {
                             </VStack>
                           </HStack>
                         </Th>
-                        <Td
-                          color="rgb(255 255 255/0.92)"
-                          borderColor="#2d3748"
-                          textAlign="right"
-                        >
+                        <Td textAlign="right">
                           {currencyFormatter(coin.current_price, options)}
                         </Td>
                         <Td
@@ -154,11 +143,7 @@ const CoinsTable = () => {
                           {positiveNum(coin.price_change_percentage_24h) && '+'}
                           {`${coin.price_change_percentage_24h.toFixed(2)}%`}
                         </Td>
-                        <Td
-                          color="rgb(255 255 255/0.92)"
-                          borderColor="#2d3748"
-                          textAlign="right"
-                        >
+                        <Td textAlign="right">
                           {currencyFormatter(coin.market_cap, options).slice(
                             0,
                             -3
