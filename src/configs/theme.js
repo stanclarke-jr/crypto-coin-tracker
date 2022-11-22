@@ -4,9 +4,11 @@ const activeLabelStyles = {
   transform: 'scale(0.85) translateY(-30px)',
 };
 
-const config = {
-  initialColorMode: 'dark',
-  useSystemColorMode: false,
+export const theme = extendTheme({
+  config: {
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+  },
   styles: {
     global: {
       body: {
@@ -45,8 +47,4 @@ const config = {
       },
     },
   },
-};
-
-const theme = extendTheme(config);
-
-export default theme;
+});
