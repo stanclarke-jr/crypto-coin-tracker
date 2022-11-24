@@ -13,7 +13,7 @@ const Banner = () => {
             fontFamily="Montserrat"
             fontWeight="bold"
           >
-            Coin Tracker
+            Koin Tracker
           </Heading>
           <Text
             as="p"

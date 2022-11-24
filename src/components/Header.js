@@ -33,7 +33,7 @@ const Header = () => {
             color="yellow.400"
             cursor="pointer"
           >
-            Coin Tracker
+            Koin Tracker
           </Text>
           <HStack>
             <Select
