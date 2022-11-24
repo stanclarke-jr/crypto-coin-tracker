@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Avatar,
   Box,
@@ -10,24 +11,28 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  Input,
   Text,
   useDisclosure,
-  Wrap,
-  WrapItem,
+  useToast,
 } from '@chakra-ui/react';
-import { useContext, useRef } from 'react';
+import { toastOptions } from '../configs/toast';
 import { CoinsContext } from '../contexts/CoinsContext';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
 
 const UserProfileDrawer = () => {
   const { user } = useContext(CoinsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
 
-  console.log(user);
+  const toast = useToast();
 
   const logOut = () => {
-    console.log('Log out function triggered.');
+    signOut(auth);
+
+    toastOptions.title = `Log out successful.`;
+    toastOptions.description = `See you soon!`;
+    toastOptions.status = 'success';
+    toast(toastOptions);
   };
 
   return (
@@ -40,23 +45,17 @@ const UserProfileDrawer = () => {
           size="md"
           ml={2}
           cursor="pointer"
-          ref={btnRef}
           onClick={onOpen}
         />
       </Box>
 
-      <Drawer
-        isOpen={isOpen}
-        placement="right"
-        onClose={onClose}
-        finalFocusRef={btnRef}
-      >
+      <Drawer placement="right" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Create your account</DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody fontFamily="monospace">
             <Flex justify="center" mb={4}>
               <Avatar
                 size="2xl"
@@ -68,25 +67,19 @@ const UserProfileDrawer = () => {
                 cursor="pointer"
               />
             </Flex>
-            <Text
-              as="span"
-              fontFamily="monospace"
-              fontSize="lg"
-              fontWeight="bold"
-            >
+            <Text as="span" fontSize="lg" fontWeight="bold">
               {user.displayName || user.email}
             </Text>
             <Flex
-              border="solid"
-              borderColor="pink"
               direction="column"
               flex="1"
               align="center"
-              h="50%"
+              bg="gray.600"
+              h="54%"
               mt={8}
               p={4}
               borderRadius="md"
-              overflowY="scroll"
+              overflowY="auto"
             >
               <Text as="span" textShadow="0 0 5px #000">
                 Watchlist
