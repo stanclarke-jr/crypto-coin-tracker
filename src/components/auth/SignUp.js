@@ -45,7 +45,7 @@ const SignUp = ({ onClose }) => {
       const user = userCredentials.user;
       if (password.length && password === confirmPassword) {
         toastOptions.title = 'Sign up successful!';
-        toastOptions.description = `You're email is ${user.email}. Go ahead and log in!`;
+        toastOptions.description = `Welcome to Koin Tracker!! Go ahead and log in!`;
         toastOptions.status = 'success';
         toast(toastOptions);
         setEmail('');

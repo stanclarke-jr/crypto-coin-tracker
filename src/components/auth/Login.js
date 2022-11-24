@@ -35,8 +35,8 @@ const Login = () => {
         password
       );
       const user = userCredentials.user;
-      toastOptions.title = `Log in successful with email: ${user.email}!`;
-      toastOptions.description = `Welcome to Coin Tracker${
+      toastOptions.title = `Log in successful!`;
+      toastOptions.description = `Welcome to Koin Tracker${
         user.displayName !== null ? ` ${user.displayName}.` : '.'
       } Track your coins!`;
       toastOptions.status = 'success';

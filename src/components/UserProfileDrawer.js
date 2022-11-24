@@ -51,11 +51,11 @@ const UserProfileDrawer = () => {
 
       <Drawer placement="right" isOpen={isOpen} onClose={onClose}>
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent align="center">
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+          <DrawerHeader fontFamily="monospace">Profile</DrawerHeader>
 
-          <DrawerBody fontFamily="monospace">
+          <DrawerBody>
             <Flex justify="center" mb={4}>
               <Avatar
                 size="2xl"
@@ -67,7 +67,12 @@ const UserProfileDrawer = () => {
                 cursor="pointer"
               />
             </Flex>
-            <Text as="span" fontSize="lg" fontWeight="bold">
+            <Text
+              as="span"
+              fontFamily="monospace"
+              fontSize="lg"
+              fontWeight="bold"
+            >
               {user.displayName || user.email}
             </Text>
             <Flex
