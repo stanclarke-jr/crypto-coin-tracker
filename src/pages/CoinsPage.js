@@ -1,28 +1,83 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from 'react';
-import {
-  Grid,
-  CircularProgress,
-  Image,
-  Text,
-  Progress,
-  VStack,
-  Container,
-  SkeletonCircle,
-} from '@chakra-ui/react';
+import CoinChart from '../components/CoinChart';
+import { CoinsContext } from '../contexts/CoinsContext';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Flex,
+  Grid,
+  Image,
+  Progress,
+  SkeletonCircle,
+  Text,
+  VStack,
+  useToast,
+} from '@chakra-ui/react';
+import { db } from '../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import parse from 'html-react-parser';
 import { SingleCoin } from '../configs/api';
-import { CoinsContext } from '../contexts/CoinsContext';
+import { toastOptions } from '../configs/toast';
 import { currencyFormatter, options } from '../utils/utils';
-import CoinChart from '../components/CoinChart';
 
 const CoinsPage = () => {
   const [coin, setCoin] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { currency } = useContext(CoinsContext);
+  const { currency, user, watchlist } = useContext(CoinsContext);
+  console.log(watchlist);
+
+  const toast = useToast();
+
+  const existsInWatchlist = watchlist.includes(coin.id);
+
+  const addToWatchlist = async () => {
+    const coinsRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(coinsRef, {
+        coins: watchlist ? [...watchlist, coin.id] : [coin.id],
+      });
+
+      toastOptions.title = `${coin.name} added to Watchlist!`;
+      toastOptions.description = `Click on your avatar to view your profile ☝ 👉`;
+      toastOptions.status = 'success';
+      toast(toastOptions);
+    } catch (error) {
+      toastOptions.title = `Oops. An error occurred.`;
+      toastOptions.description = error.message;
+      toastOptions.status = 'error';
+      toast(toastOptions);
+    }
+  };
+
+  const removeFromWatchlist = async () => {
+    const coinsRef = doc(db, 'watchlist', user.uid);
+
+    try {
+      await setDoc(
+        coinsRef,
+        {
+          coins: watchlist.filter(watchedCoins => watchedCoins !== coin.id),
+        },
+        { merge: 'true' }
+      );
+
+      toastOptions.title = `${coin.name} removed from Watchlist.`;
+      toastOptions.description = `Click on your avatar to view your profile ☝ 👉`;
+      toastOptions.status = 'success';
+      toast(toastOptions);
+    } catch (error) {
+      toastOptions.title = `Oops. An error occurred.`;
+      toastOptions.description = error.message;
+      toastOptions.status = 'error';
+      toast(toastOptions);
+    }
+  };
 
   const shortCoinDescription = coin?.description?.en.includes('href=')
     ? coin?.description?.en.split('. ')[0]
@@ -148,6 +203,28 @@ const CoinsPage = () => {
                   M
                 </Text>
               </Text>
+              {user && (
+                <Flex
+                  w={['45%', null, null, 'full']}
+                  justifyContent="center"
+                  px={0}
+                  py={6}
+                >
+                  <Button
+                    w="full"
+                    bg={existsInWatchlist ? 'red.600' : 'yellow.400'}
+                    color="#000"
+                    fontWeight="600"
+                    onClick={
+                      existsInWatchlist ? removeFromWatchlist : addToWatchlist
+                    }
+                  >
+                    {existsInWatchlist
+                      ? 'REMOVE FROM WATCHLIST'
+                      : 'ADD TO WATCHLIST'}
+                  </Button>
+                </Flex>
+              )}
             </>
           )}
         </VStack>
