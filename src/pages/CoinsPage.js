@@ -205,7 +205,7 @@ const CoinsPage = () => {
               </Text>
               {user && (
                 <Flex
-                  w={['45%', null, null, 'full']}
+                  w={['60%', null, null, 'full']}
                   justifyContent="center"
                   px={0}
                   py={6}
