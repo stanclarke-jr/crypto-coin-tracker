@@ -78,6 +78,7 @@ const AuthModal = () => {
       } Track your coins!`;
       toastOptions.status = 'success';
       toast(toastOptions);
+      return;
 
       // console.log(
       //   '%cSign in with popup result: ',
@@ -106,6 +107,7 @@ const AuthModal = () => {
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
       // ...
+      return;
     }
   };
 
