@@ -12,9 +12,11 @@ export const CoinsProvider = ({ children }) => {
   const [coins, setCoins] = useState([]);
   const [currency, setCurrency] = useState('CAD');
   const [loading, setLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [user, setUser] = useState(null);
   const [watchlist, setWatchlist] = useState([]);
 
+  console.log('Watchlist is loaded: ', isLoaded);
   console.log(watchlist);
 
   const fetchCoins = async () => {
@@ -35,14 +37,16 @@ export const CoinsProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    setIsLoaded(false);
     if (user) {
       const coinsRef = doc(db, 'watchlist', user.uid);
       const unsubscribe = onSnapshot(
         coinsRef,
         watchlist => {
-          watchlist.exists()
-            ? setWatchlist(watchlist.data().coins)
-            : console.log('There are no coins in the watchlist.');
+          if (watchlist.exists()) {
+            setWatchlist(watchlist.data().coins);
+          } else console.log('There are no coins in the watchlist.');
+          setIsLoaded(true);
         },
         error => {
           console.log(error);
@@ -57,8 +61,11 @@ export const CoinsProvider = ({ children }) => {
       value={{
         coins,
         currency,
+        isLoaded,
+        setIsLoaded,
         loading,
         setCurrency,
+        setLoading,
         setUser,
         user,
         watchlist,

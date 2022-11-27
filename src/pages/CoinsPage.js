@@ -16,6 +16,8 @@ import {
   Text,
   VStack,
   useToast,
+  Skeleton,
+  SkeletonText,
 } from '@chakra-ui/react';
 import { db } from '../firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -26,21 +28,20 @@ import { currencyFormatter, options } from '../utils/utils';
 
 const CoinsPage = () => {
   const [coin, setCoin] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  const { currency, user, watchlist } = useContext(CoinsContext);
-  console.log(watchlist);
+  const { currency, isLoaded, loading, setLoading, user, watchlist } =
+    useContext(CoinsContext);
 
   const toast = useToast();
 
-  const existsInWatchlist = watchlist.includes(coin.id);
+  const existsInWatchlist = watchlist.includes(coin?.id);
 
   const addToWatchlist = async () => {
     const coinsRef = doc(db, 'watchlist', user.uid);
 
     try {
       await setDoc(coinsRef, {
-        coins: watchlist ? [...watchlist, coin.id] : [coin.id],
+        coins: watchlist ? [...watchlist, coin?.id] : [coin?.id],
       });
 
       toastOptions.title = `${coin.name} added to Watchlist!`;
@@ -67,7 +68,7 @@ const CoinsPage = () => {
         { merge: 'true' }
       );
 
-      toastOptions.title = `${coin.name} removed from Watchlist.`;
+      toastOptions.title = `${coin.name} coin removed from Watchlist.`;
       toastOptions.description = `Click on your avatar to view your profile ☝ 👉`;
       toastOptions.status = 'success';
       toast(toastOptions);
@@ -149,12 +150,19 @@ const CoinsPage = () => {
                 px={0}
                 pb={10}
               >
-                <Text
-                  color="rgb(255 255 255/0.92)"
-                  textAlign={[null, 'center', null, 'left']}
+                <SkeletonText
+                  isLoaded={!loading}
+                  maxW={['sm', 'md', 'lg', 'xl', '2xl']}
+                  noOfLines={4}
+                  spacing={4}
                 >
-                  {parse(`${shortCoinDescription}.`)}
-                </Text>
+                  <Text
+                    color="rgb(255 255 255/0.92)"
+                    textAlign={[null, 'center', null, 'left']}
+                  >
+                    {parse(`${shortCoinDescription}.`)}
+                  </Text>
+                </SkeletonText>
               </Container>
               <Text
                 color="rgb(255 255 255/0.92)"
@@ -203,28 +211,29 @@ const CoinsPage = () => {
                   M
                 </Text>
               </Text>
-              {user && (
-                <Flex
-                  w={['60%', null, null, 'full']}
-                  justifyContent="center"
-                  px={0}
-                  py={6}
-                >
-                  <Button
-                    w="full"
-                    bg={existsInWatchlist ? 'red.600' : 'yellow.400'}
-                    color="#000"
-                    fontWeight="600"
-                    onClick={
-                      existsInWatchlist ? removeFromWatchlist : addToWatchlist
-                    }
-                  >
-                    {existsInWatchlist
-                      ? 'REMOVE FROM WATCHLIST'
-                      : 'ADD TO WATCHLIST'}
-                  </Button>
-                </Flex>
-              )}
+              <Flex
+                w={['57%', null, null, '100%']}
+                justifyContent="center"
+                py={6}
+              >
+                {user && (
+                  <Skeleton isLoaded={isLoaded} w={['57%', null, null, '100%']}>
+                    <Button
+                      w="full"
+                      bg={existsInWatchlist ? 'red.600' : 'yellow.400'}
+                      color="#000"
+                      fontWeight="600"
+                      onClick={
+                        existsInWatchlist ? removeFromWatchlist : addToWatchlist
+                      }
+                    >
+                      {existsInWatchlist
+                        ? 'REMOVE FROM WATCHLIST'
+                        : 'ADD TO WATCHLIST'}
+                    </Button>
+                  </Skeleton>
+                )}
+              </Flex>
             </>
           )}
         </VStack>
