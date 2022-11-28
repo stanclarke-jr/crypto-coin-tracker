@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -15,10 +15,13 @@ import {
   Tab,
   TabPanels,
   TabPanel,
-  Text,
   useToast,
 } from '@chakra-ui/react';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from 'firebase/auth';
 import { auth } from '../../firebase';
 import Login from './Login';
 import SignUp from './SignUp';
@@ -64,51 +67,61 @@ const AuthModal = () => {
 
   const toast = useToast();
 
-  const signInWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      // This gives you a Google Access Token. You can use it to access Google APIs.
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
+  const isMobile = navigator.userAgentData.mobile;
 
-      const user = result.user;
-      toastOptions.title = `Success!`;
-      toastOptions.description = `Welcome to Koin Tracker${
-        user.displayName !== null ? ` ${user.displayName}.` : '.'
-      } Track your coins!`;
-      toastOptions.status = 'success';
-      toast(toastOptions);
-      return;
+  const formDividerStyles = {
+    content: `''`,
+    background: '#4a5568',
+    width: '125px',
+    height: '1px',
+  };
 
-      // console.log(
-      //   '%cSign in with popup result: ',
-      //   'color: purple; font-weight: bold',
-      //   result
-      // );
-      // console.log(
-      //   '%cCredential from result: ',
-      //   'color: darkcyan; font-weight: bold',
-      //   credential
-      // );
-      // console.log(
-      //   '%cAccess token: ',
-      //   'color: darkgreen; font-weight: bold',
-      //   token
-      // );
-      // console.log('%cUser data: ', 'color: darkblue; font-weight: bold', user);
-    } catch (error) {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode);
-      console.log(errorMessage);
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-      // ...
-      return;
-    }
+  const signInWithGoogleRedirect = () => {
+    signInWithRedirect(auth, googleProvider);
+  };
+  const signInWithGooglePopup = () => {
+    signInWithPopup(auth, googleProvider)
+      .then(result => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        const user = result.user;
+        toastOptions.title = `Success!`;
+        toastOptions.description = `Welcome to Koin Tracker${
+          user.displayName !== null ? ` ${user.displayName}.` : '.'
+        } Track your coins!`;
+        toastOptions.status = 'success';
+        toast(toastOptions);
+        // console.log(
+        //   '%cSign in with popup result: ',
+        //   'color: purple; font-weight: bold',
+        //   result
+        // );
+        // console.log(
+        //   '%cCredential from result: ',
+        //   'color: darkcyan; font-weight: bold',
+        //   credential
+        // );
+        // console.log(
+        //   '%cAccess token: ',
+        //   'color: darkgreen; font-weight: bold',
+        //   token
+        // );
+        // console.log('%cUser data: ', 'color: darkblue; font-weight: bold', user);
+      })
+      .catch(error => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   };
 
   return (
@@ -134,16 +147,22 @@ const AuthModal = () => {
                   <SignUp onClose={onClose} />
                 </TabPanel>
                 <Flex
-                  direction="column"
-                  align="center"
-                  gap={4}
                   px={4}
-                  pb={4}
-                  pt={2}
+                  fontSize="xl"
+                  justify="center"
+                  align="center"
+                  _before={{
+                    ...formDividerStyles,
+                    marginRight: '25px',
+                  }}
+                  _after={{
+                    ...formDividerStyles,
+                    marginLeft: '25px',
+                  }}
                 >
-                  <Text as="span" fontSize="xl">
-                    OR
-                  </Text>
+                  OR
+                </Flex>
+                <Box p={4}>
                   {/* <Box id="google-button__div" w="100%"></Box> */}
                   <GoogleButton
                     style={{
@@ -153,9 +172,13 @@ const AuthModal = () => {
                       backgroundColor: '#171923',
                     }}
                     label="Continue with Google"
-                    onClick={signInWithGoogle}
+                    onClick={
+                      isMobile
+                        ? signInWithGoogleRedirect
+                        : signInWithGooglePopup
+                    }
                   />
-                </Flex>
+                </Box>
               </TabPanels>
             </Tabs>
           </ModalBody>
