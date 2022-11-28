@@ -29,8 +29,6 @@ const UserProfileDrawer = () => {
   const { coins, user, watchlist } = useContext(CoinsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  console.log(coins);
-
   const toast = useToast();
 
   const logOut = () => {

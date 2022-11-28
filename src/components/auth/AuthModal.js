@@ -121,6 +121,10 @@ const AuthModal = () => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        toastOptions.title = `Oops. An error occurred.`;
+        toastOptions.description = errorMessage;
+        toastOptions.status = 'error';
+        toast(toastOptions);
       });
   };
 

@@ -16,9 +16,6 @@ export const CoinsProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [watchlist, setWatchlist] = useState([]);
 
-  console.log('Watchlist is loaded: ', isLoaded);
-  console.log(watchlist);
-
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
