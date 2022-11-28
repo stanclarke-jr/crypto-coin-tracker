@@ -11,12 +11,10 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  HStack,
   IconButton,
   Text,
   useDisclosure,
   useToast,
-  VStack,
 } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { toastOptions } from '../configs/toast';
@@ -28,7 +26,7 @@ import { currencyFormatter, options } from '../utils/utils';
 import { doc, setDoc } from 'firebase/firestore';
 
 const UserProfileDrawer = () => {
-  const { coins, currency, user, watchlist } = useContext(CoinsContext);
+  const { coins, user, watchlist } = useContext(CoinsContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   console.log(coins);
@@ -113,7 +111,7 @@ const UserProfileDrawer = () => {
               flex="1"
               align="center"
               bg="gray.600"
-              h="54%"
+              h={['65%', null, '54%', null, '54%']}
               mt={8}
               borderRadius="md"
               overflowY="auto"
@@ -124,6 +122,7 @@ const UserProfileDrawer = () => {
               {coins.map(coin =>
                 watchlist.includes(coin.id) ? (
                   <Flex
+                    key={coin.id}
                     w="92%"
                     justify="space-between"
                     align="center"
@@ -138,7 +137,7 @@ const UserProfileDrawer = () => {
                         {coin.name}
                       </Text>
                     </Link>
-                    <Text as="span" vericalAlign="middle">
+                    <Text as="span">
                       {currencyFormatter(coin?.current_price, options)}
                       <IconButton
                         aria-label="Remove coin from watchlist"

@@ -217,7 +217,10 @@ const CoinsPage = () => {
                 py={6}
               >
                 {user && (
-                  <Skeleton isLoaded={isLoaded} w={['57%', null, null, '100%']}>
+                  <Skeleton
+                    isLoaded={isLoaded}
+                    w={['100%', null, '65%', null, '100%']}
+                  >
                     <Button
                       w="full"
                       bg={existsInWatchlist ? 'red.600' : 'yellow.400'}
