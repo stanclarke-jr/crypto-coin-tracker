@@ -21,6 +21,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithRedirect,
+  signInWithCredential,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
 import Login from './Login';
@@ -35,16 +36,32 @@ const AuthModal = () => {
 
   const googleProvider = new GoogleAuthProvider();
 
-  ///// **** Button doesn't appear when modal opens + styles are applued b/c of the iframe
+  ///// **** Button doesn't always appear when modal opens + styles are not applied b/c of the iframe
   ///// TODO: Get the new Google Indentitiy Plaform Sign In to work instead of using react-google-button package in conjunction with a custom handler
   ///// https://developers.google.com/identity/gsi/web/guides/overview
 
   // const google = (window.google = window.google ? window.google : {});
   // console.log('%cGlobal google object: ', 'color: dodgerblue', google);
   // const handleCredentialResponse = response => {
-  //   console.log('Encoded JWT ID token: ' + response.credential);
+  //   console.log('Encoded JWT ID token: ', response.credential);
   //   const decodedResponse = jwt_decode(response.credential);
-  //   console.log(decodedResponse);
+  //   console.log('Decoded JWT ID token: ', decodedResponse);
+
+  //   // Build Firebase credential with the Google ID token
+  //   const idToken = response.credential;
+  //   const credential = GoogleAuthProvider.credential(idToken);
+  //   console.log('Firebase credential: ', credential);
+
+  //   // Sign in with credential from the Google user
+  //   signInWithCredential(auth, credential).catch(error => {
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     console.error('%cError: ', 'color: red', errorMessage);
+  //     const email = error.email;
+  //     // The credential that was used
+  //     const credential = GoogleAuthProvider.credentialFromError(error);
+  //     // ...
+  //   });
   // };
 
   // useEffect(() => {
@@ -167,11 +184,10 @@ const AuthModal = () => {
                   OR
                 </Flex>
                 <Box p={4}>
-                  {/* <Box id="google-button__div" w="100%"></Box> */}
                   <GoogleButton
                     style={{
                       width: '100%',
-                      borderRadius: '5px',
+                      borderRadius: '0.375rem',
                       fontWeight: '500',
                       backgroundColor: '#171923',
                     }}
@@ -182,6 +198,7 @@ const AuthModal = () => {
                         : signInWithGooglePopup
                     }
                   />
+                  {/* <Box id="google-button__div" w="100%"></Box> */}
                 </Box>
               </TabPanels>
             </Tabs>
