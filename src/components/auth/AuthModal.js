@@ -21,7 +21,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithRedirect,
-  signInWithCredential,
   getRedirectResult,
 } from 'firebase/auth';
 import { auth } from '../../firebase';
@@ -94,38 +93,6 @@ const AuthModal = () => {
     height: '1px',
   };
 
-  const signInWithGoogleRedirect = () => {
-    signInWithRedirect(auth, googleProvider);
-    getRedirectResult(auth)
-      .then(result => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-
-        const user = result.user;
-
-        toastOptions.title = `Success!`;
-        toastOptions.description = `Welcome to Koin Tracker${
-          user.displayName !== null ? ` ${user.displayName}.` : '.'
-        } Track your coins!`;
-        toastOptions.status = 'success';
-        toast(toastOptions);
-      })
-      .catch(error => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-        toastOptions.title = `Oops. An error occurred.`;
-        toastOptions.description = errorMessage;
-        toastOptions.status = 'error';
-        toast(toastOptions);
-      });
-  };
   const signInWithGooglePopup = () => {
     signInWithPopup(auth, googleProvider)
       .then(result => {
@@ -169,6 +136,37 @@ const AuthModal = () => {
         // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        toastOptions.title = `Oops. An error occurred.`;
+        toastOptions.description = errorMessage;
+        toastOptions.status = 'error';
+        toast(toastOptions);
+      });
+  };
+
+  const signInWithGoogleRedirect = () => {
+    signInWithRedirect(auth, googleProvider);
+    getRedirectResult(auth)
+      .then(result => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+
+        const user = result.user;
+
+        toastOptions.title = `Success!`;
+        toastOptions.description = `Welcome to Koin Tracker${
+          user.displayName !== null ? ` ${user.displayName}.` : '.'
+        } Track your coins!`;
+        toastOptions.status = 'success';
+        toast(toastOptions);
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
         toastOptions.title = `Oops. An error occurred.`;
         toastOptions.description = errorMessage;
         toastOptions.status = 'error';

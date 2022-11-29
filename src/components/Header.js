@@ -1,12 +1,4 @@
-import {
-  Box,
-  Container,
-  Flex,
-  HStack,
-  Select,
-  Text,
-  // useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Container, Flex, HStack, Select, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -15,8 +7,6 @@ import AuthModal from './auth/AuthModal';
 import UserProfileDrawer from './UserProfileDrawer';
 
 const Header = () => {
-  // const isDesktop = useBreakpointValue({ base: false, lg: true });
-
   const { currency, setCurrency, user } = useContext(CoinsContext);
 
   const navigate = useNavigate();

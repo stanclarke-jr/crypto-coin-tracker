@@ -36,6 +36,7 @@ const SignUp = ({ onClose }) => {
       setConfirmPassword('');
       return;
     }
+
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -43,6 +44,7 @@ const SignUp = ({ onClose }) => {
         password
       );
       const user = userCredentials.user;
+
       if (password.length && password === confirmPassword) {
         toastOptions.title = 'Sign up successful!';
         toastOptions.description = `Welcome to Koin Tracker!! Go ahead and log in!`;
