@@ -1,4 +1,5 @@
 import { chakra } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 
 const ReactPaginateFlex = chakra(ReactPaginate);
@@ -10,9 +11,17 @@ const Pagination = ({
   setOffset,
   endOffset,
   setPage,
+  isSearch,
+  handleSearch,
 }) => {
   // console.log(`Loading items from ${offset} to ${endOffset}`);
-  const pageCount = Math.ceil(coins.length / itemsPerPage);
+
+  const pageCount = Math.ceil(handleSearch().length / itemsPerPage);
+  useEffect(() => {
+    if (isSearch) {
+      setPage(1);
+    }
+  }, [offset]);
 
   const handlePageClick = e => {
     const newOffset = (e.selected * itemsPerPage) % coins.length;
@@ -22,7 +31,12 @@ const Pagination = ({
     // console.log(
     //   `User requested page number ${e.selected}, which is offset ${newOffset}`
     // );
-    setOffset(newOffset);
+
+    setOffset(currOffset =>
+      isSearch
+        ? { ...currOffset, search: newOffset }
+        : { ...currOffset, page: newOffset }
+    );
   };
 
   return (
