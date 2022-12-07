@@ -11,21 +11,33 @@ const Pagination = ({
   setOffset,
   endOffset,
   setPage,
+  search,
   isSearch,
   handleSearch,
+  page,
 }) => {
   // console.log(`Loading items from ${offset} to ${endOffset}`);
 
   const pageCount = Math.ceil(handleSearch().length / itemsPerPage);
   useEffect(() => {
     if (isSearch) {
-      setPage(1);
+      setPage(currPage => {
+        return { ...currPage, search: 0 };
+      });
+      setOffset(currOffset => {
+        return { ...currOffset, search: 0 };
+      });
     }
-  }, [offset]);
+  }, [search]);
 
   const handlePageClick = e => {
+    console.log('hello', e.selected);
     const newOffset = (e.selected * itemsPerPage) % coins.length;
-    setPage(e.selected + 1);
+    setPage(currPage =>
+      isSearch
+        ? { ...currPage, search: e.selected }
+        : { ...currPage, default: e.selected }
+    );
     window.scrollTo({ top: 495, left: 0, behavior: 'smooth' });
     // console.log(e.selected);
     // console.log(
@@ -35,7 +47,7 @@ const Pagination = ({
     setOffset(currOffset =>
       isSearch
         ? { ...currOffset, search: newOffset }
-        : { ...currOffset, page: newOffset }
+        : { ...currOffset, default: newOffset }
     );
   };
 
@@ -45,6 +57,7 @@ const Pagination = ({
       onPageChange={handlePageClick}
       pageRangeDisplayed={5}
       pageCount={pageCount}
+      forcePage={isSearch ? page.search : page.default}
       previousLabel="⬅"
       nextLabel="➡"
       renderOnZeroPageCount={null}

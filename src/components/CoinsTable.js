@@ -24,12 +24,12 @@ import Pagination from './Pagination';
 const CoinsTable = () => {
   const [search, setSearch] = useState('');
   // eslint-disable-next-line no-unused-vars
-  const [page, setPage] = useState(1);
-  const [offset, setOffset] = useState({ search: 0, page: 0 });
+  const [page, setPage] = useState({ search: 0, default: 0 });
+  const [offset, setOffset] = useState({ search: 0, default: 0 });
 
   const itemsPerPage = 10;
   const isSearch = search.length > 0;
-  const startOffset = isSearch ? offset.search : offset.page;
+  const startOffset = isSearch ? offset.search : offset.default;
   const endOffset = startOffset + itemsPerPage;
   const { coins, loading } = useContext(CoinsContext);
 
@@ -165,7 +165,9 @@ const CoinsTable = () => {
         setOffset={setOffset}
         endOffset={endOffset}
         setPage={setPage}
+        page={page}
         isSearch={isSearch}
+        search={search}
         handleSearch={handleSearch}
       />
     </>
