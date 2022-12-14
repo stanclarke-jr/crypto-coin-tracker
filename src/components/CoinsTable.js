@@ -24,12 +24,13 @@ import Pagination from './Pagination';
 const CoinsTable = () => {
   const [search, setSearch] = useState('');
   // eslint-disable-next-line no-unused-vars
-  const [page, setPage] = useState(1);
-  const [offset, setOffset] = useState(0);
+  const [page, setPage] = useState({ search: 0, default: 0 });
+  const [offset, setOffset] = useState({ search: 0, default: 0 });
 
   const itemsPerPage = 10;
-  const endOffset = offset + itemsPerPage;
-
+  const isSearch = search.length > 0;
+  const startOffset = isSearch ? offset.search : offset.default;
+  const endOffset = startOffset + itemsPerPage;
   const { coins, loading } = useContext(CoinsContext);
 
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const CoinsTable = () => {
         coin.symbol.toLowerCase().includes(search.toLowerCase())
     );
   };
-
+  console.log(handleSearch().slice(startOffset, endOffset));
   return (
     <>
       <Container maxW="100%">
@@ -56,7 +57,7 @@ const CoinsTable = () => {
         </Text>
         <Input
           placeholder="Search for a coin..."
-          _placeholder={{ opcity: 0.8, color: 'gray.500' }}
+          _placeholder={{ opacity: 0.8, color: 'gray.500' }}
           _hover={{ borderColor: 'rgb(255 255 255/0.24)' }}
           _focusVisible={{
             borderColor: 'whiteAlpha.500',
@@ -91,7 +92,7 @@ const CoinsTable = () => {
               </Thead>
               <Tbody>
                 {handleSearch()
-                  .slice(offset, endOffset)
+                  .slice(startOffset, endOffset)
                   .map(coin => {
                     return (
                       <Tr
@@ -164,6 +165,10 @@ const CoinsTable = () => {
         setOffset={setOffset}
         endOffset={endOffset}
         setPage={setPage}
+        page={page}
+        isSearch={isSearch}
+        search={search}
+        handleSearch={handleSearch}
       />
     </>
   );
