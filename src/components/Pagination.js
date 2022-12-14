@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { chakra } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
@@ -31,7 +32,6 @@ const Pagination = ({
   }, [search]);
 
   const handlePageClick = e => {
-    console.log('hello', e.selected);
     const newOffset = (e.selected * itemsPerPage) % coins.length;
     setPage(currPage =>
       isSearch
@@ -39,10 +39,6 @@ const Pagination = ({
         : { ...currPage, default: e.selected }
     );
     window.scrollTo({ top: 495, left: 0, behavior: 'smooth' });
-    // console.log(e.selected);
-    // console.log(
-    //   `User requested page number ${e.selected}, which is offset ${newOffset}`
-    // );
 
     setOffset(currOffset =>
       isSearch

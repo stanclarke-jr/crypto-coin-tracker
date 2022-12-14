@@ -28,8 +28,8 @@ const CoinsTable = () => {
   const [offset, setOffset] = useState({ search: 0, default: 0 });
 
   const itemsPerPage = 10;
-  const isSearch = search.length > 0;
-  const startOffset = isSearch ? offset.search : offset.default;
+  const activeSearch = search.length > 0;
+  const startOffset = activeSearch ? offset.search : offset.default;
   const endOffset = startOffset + itemsPerPage;
   const { coins, loading } = useContext(CoinsContext);
 
@@ -42,7 +42,7 @@ const CoinsTable = () => {
         coin.symbol.toLowerCase().includes(search.toLowerCase())
     );
   };
-  console.log(handleSearch().slice(startOffset, endOffset));
+
   return (
     <>
       <Container maxW="100%">
@@ -166,7 +166,7 @@ const CoinsTable = () => {
         endOffset={endOffset}
         setPage={setPage}
         page={page}
-        isSearch={isSearch}
+        isSearch={activeSearch}
         search={search}
         handleSearch={handleSearch}
       />
