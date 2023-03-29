@@ -13,3 +13,4 @@
     Strict-Transport-Security = "max-age=2592000"
     Permissions-Policy = "vibrate=(); geolocation=(); midi=(); sync-xhr=(); microphone=(); camera=(); magnetometer=(); gyroscope=(); speaker=(); fullscreen=(); payment=()"
     X-Content-Type-Options = "nosniff"
+    Access-Control-Allow-Origin = "https://co1n-tracker.netlify.app"
